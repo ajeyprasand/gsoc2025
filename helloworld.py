@@ -1,44 +1,43 @@
 import os
-import sys
 
 # Hardcoded credentials (Security issue)
 USERNAME = "admin"
 PASSWORD = "password123"
 
-# Unused variable (Code smell)
-unused_variable = "This is never used"
+def authenticate(user, pwd):
+    if user == USERNAME and pwd == PASSWORD:  # Hardcoded credentials used here
+        return "Authentication Successful"
+    else:
+        return "Authentication Failed"
 
-def division(a, b):
-    # Division by zero (Potential bug)
-    return a / b
+# Unused variable (Code Smell)
+unused_variable = 42
 
-def read_file():
-    # Ignoring exceptions (Bad practice)
+def process_data(data):
+    # Inefficient string concatenation in a loop (Performance issue)
+    result = ""
+    for item in data:
+        result += item  # This is inefficient; should use join()
+    return result
+
+# Exception not handled properly (Bug)
+def divide_numbers(a, b):
     try:
-        with open("config.txt", "r") as file:
-            data = file.read()
-        return data
+        return a / b
     except:
-        pass
+        print("An error occurred")  # Generic exception handling, not specifying the error type
 
-def unsafe_exec(user_input):
-    # Security issue: Using eval (Major vulnerability)
-    eval(user_input)
+# Duplicated Code (Code Smell)
+def greet_user1(name):
+    return f"Hello, {name}!"
 
-def infinite_loop():
-    # Infinite loop (Code smell)
-    while True:
-        print("Running...")
+def greet_user2(name):
+    return f"Hello, {name}!"  # Duplicate function
 
-if __name__ == "__main__":
-    print("Starting application...")
-    
-    # Potentially dangerous use of user input
-    user_input = input("Enter command: ")
-    unsafe_exec(user_input)
+# Function with too many parameters (Code Smell)
+def complex_function(a, b, c, d, e, f, g, h, i, j):
+    return a + b + c + d + e + f + g + h + i + j
 
-    # Possible division by zero
-    print(division(10, 0))
-
-    # Read file without handling specific exceptions
-    config_data = read_file()
+# Dead Code (Code Smell)
+def unused_function():
+    print("This function is never called")
