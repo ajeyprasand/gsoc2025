@@ -15,6 +15,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  
+          
+      - name: Debug Secrets
+        run: |
+          echo "Checking if secrets are available..."
+          echo "SONAR_HOST_URL: $SONAR_HOST_URL"
+          [[ -z "$SONAR_TOKEN" ]] && echo "SONAR_TOKEN is missing!" || echo "SONAR_TOKEN is set!"
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: SonarQube Analysis
         uses: SonarSource/sonarqube-scan-action@v5.0.0
