@@ -9,7 +9,7 @@ IssueStatus = ["OPEN", "CONFIRMED", "FALSE_POSITIVE", "ACCEPTED", "FIXED"]
 def get_sonarqube_issues():
     sonarqubeIssues = []
     token = os.getenv("SONAR_TOKEN")
-    url = os.getenv("SONAR_HOST_URL")
+    url = os.getenv("SONAR_HOST_URL") + "/api/issues/search"
     params = {
         "components": "gsoc2025",
         "severities": ",".join(Severities),
