@@ -41,4 +41,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
-        run: python gsoc2025/GSOC.py
+        run: python GSOC.py
