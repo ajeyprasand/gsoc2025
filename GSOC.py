@@ -78,7 +78,7 @@ def create_github_issues(issues):
         "Authorization": f"Bearer {token}",
         "X-GitHub-Api-Version": "2022-11-28"
     }
-    for issue in issues[:2]:
+    for issue in issues:
         response = requests.post(url, headers=headers, json=issue)
         if response.status_code == 201:
             print(f"Successfully created issue: {issue['title']}")
