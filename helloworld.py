@@ -1,43 +1,55 @@
-import os
+import platform
 
-# Hardcoded credentials (Security issue)
-USERNAME = "admin"
-PASSWORD = "password123"
-
-def authenticate(user, pwd):
-    if user == USERNAME and pwd == PASSWORD:  # Hardcoded credentials used here
-        return "Authentication Successful"
+# Reference to an undefined variable (Bug)
+def check_value(x):
+    if x > 10:
+        result = "High"
     else:
-        return "Authentication Failed"
+        pass  # 'result' is never assigned in this case
+    return result  # Undefined variable error
 
-# Unused variable (Code Smell)
-unused_variable = 42
+# Unreachable code (Code Smell)
+def always_returns():
+    return "Done"
+    print("This will never execute")  # Unreachable
 
-def process_data(data):
-    # Inefficient string concatenation in a loop (Performance issue)
-    result = ""
-    for item in data:
-        result += item  # This is inefficient; should use join()
-    return result
+# Wrong fields in formatted strings
+name = "Alice"
+message = "{user} has logged in".format(username=name)  # Incorrect field name
 
-# Exception not handled properly (Bug)
-def divide_numbers(a, b):
-    try:
-        return a / b
-    except:
-        print("An error occurred")  # Generic exception handling, not specifying the error type
+# Type Errors
+output_shape = (64, 64, 3)
+state_shape = output_shape[1:]  # Correctly assigned as tuple
+output_shape = [32, 32, 3]  # Reassigned as list
+print(state_shape[0] + output_shape[0])  # Type error: tuple + list
 
-# Duplicated Code (Code Smell)
-def greet_user1(name):
-    return f"Hello, {name}!"
+# Wrong argument type
+def get_length(value):
+    return len(value)  # If an integer is passed, it will throw TypeError
 
-def greet_user2(name):
-    return f"Hello, {name}!"  # Duplicate function
+print(get_length(10))  # This will cause a runtime error
 
-# Function with too many parameters (Code Smell)
-def complex_function(a, b, c, d, e, f, g, h, i, j):
-    return a + b + c + d + e + f + g + h + i + j
+# Comparisons that don’t make sense
+arch = platform.architecture()
+if arch == "64bit":  # 'arch' is a tuple, this comparison is always False
+    print("64-bit system detected")
 
-# Dead Code (Code Smell)
-def unused_function():
-    print("This function is never called")
+# Ignored return value
+warning_msg = "Make sure that your dataset can generate at least "
+warning_msg.format(1000)  # The formatted result is discarded
+
+# Unraised exceptions
+class CustomException(Exception):
+    pass
+
+def risky_function():
+    CustomException("Something went wrong")  # Should be 'raise CustomException(...)'
+
+# Calling the functions to demonstrate issues
+try:
+    print(check_value(5))
+except Exception as e:
+    print(f"Error: {e}")
+
+always_returns()
+risky_function()
